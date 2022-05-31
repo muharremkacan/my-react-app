@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          modified one
+          push and deploy to ec2
         </a>
       </header>
     </div>
