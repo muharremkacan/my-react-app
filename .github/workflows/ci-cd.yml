@@ -36,6 +36,7 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
+        
       - name: cd-to-terraform-files-dir
         run: cd ./terraform-files
       - name: setup terraform
