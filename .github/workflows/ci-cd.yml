@@ -11,10 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: use nodejs
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: "12.x"
-      - run: npm build
+          cache: 'npm'
+      - run: |
+          npm ci
+          npm run build
       - name: Archive production artifacts
         uses: actions/upload-artifact@v3
         with:
