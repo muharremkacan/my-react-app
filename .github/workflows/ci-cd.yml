@@ -36,26 +36,26 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3 
-      - name: cd-to-terraform-files-dir
-        run: cd ./terraform-files
+      # - name: cd-to-terraform-files-dir
+      #   run: cd ./terraform-files
       - name: setup terraform
         uses: hashicorp/setup-terraform@v2
-      - name: cd-to-terraform-files-dir
-        run: cd ./terraform-files
+      # - name: cd-to-terraform-files-dir
+      #   run: cd ./terraform-files
       - name: terraform init
         id: init
         run: terraform init
-      - name: cd-to-terraform-files-dir
-        run: cd ./terraform-files
+      # - name: cd-to-terraform-files-dir
+      #   run: cd ./terraform-files
       - name: terraform plan
         id: plan
         run: terraform plan
         continue-on-error: true
-      - name: cd-to-terraform-files-dir
-        run: cd ./terraform-files
-      # - name: plan status
-      #   if: steps.plan.outcome == 'failure'
-      #   run: exit 1
+      # - name: cd-to-terraform-files-dir
+      #   run: cd ./terraform-files
+      - name: plan status
+        if: steps.plan.outcome == 'failure'
+        run: exit 1
       - name: terraform apply
         run: terraform apply -auto-approve
 
