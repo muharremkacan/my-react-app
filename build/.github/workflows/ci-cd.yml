@@ -1,0 +1,43 @@
+name: build-and-push-to-ec2
+
+on: 
+  push:
+    branches: 
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: use nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - run: npm run build
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: files-in-build-folder
+          path: |
+            build/*
+
+  deploy:
+    name: Deploy to EC2 on master branch push
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+
+      - name: Download build files
+        uses: actions/download-artifact@v3
+        with:
+          name: files-in-build-folder
+
+      - name: Deploy to aws ubuntu
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}

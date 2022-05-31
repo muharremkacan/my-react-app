@@ -15,7 +15,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          this is deployed with github actions
+          this is the test one
         </a>
       </header>
     </div>
